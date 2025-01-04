@@ -17,7 +17,18 @@ def countdown():
             delete()
             start_writing = False
 
-        tk.Tk.after(1000, countdown)
+        root.after(1000, countdown)
+
+
+def check(event):
+    global start_writing
+
+    if start_writing:
+        reset_timer()
+
+    else:
+        start_writing = True
+        countdown()
 
 
 def reset_timer():
@@ -34,13 +45,14 @@ root = tk.Tk()
 root.title("Disappearing Text Writing App")
 root.geometry("1000x600")
 
-label = tk.Label()
-label.config(text="Start", font=50)
-label.pack()
+label = tk.Label(root, text="Disappearing Text App", font=("Arial", 24))
+label.pack(pady=20)
 
 
-text = tk.Text(font=50)
-text.pack()
+text = tk.Text(root, font=("Arial", 16), wrap="word", height=20, width=80)
+text.pack(padx=20, pady=20)
+
+text.bind("<KeyPress>", check)
 
 
 root.mainloop()
